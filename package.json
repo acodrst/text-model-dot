@@ -6,5 +6,5 @@
     "main": "./text-model-dot",
     "repository": { "type": "git", "url": "git@github.com:acodrst/fpng.git" },
     "files": ["text-model-dot.js", "LICENSE", "README.md"],
-    "license": "CC0-1.0",
+    "license": "CC0-1.0"
 }
