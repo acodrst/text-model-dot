@@ -4,7 +4,7 @@
     "author": "acodrst",
     "description": "Converts graph stack text into dot format",
     "main": "./text-model-dot",
-    "repository": { "type": "git", "url": "git@github.com:acodrst/fpng.git" },
+    "repository": { "type": "git", "url": "git@github.com:acodrst/text-model-dot.git" },
     "files": ["text-model-dot.js", "LICENSE", "README.md"],
     "license": "CC0-1.0"
 }
