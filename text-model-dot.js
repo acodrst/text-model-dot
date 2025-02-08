@@ -155,7 +155,7 @@ function model_to_dots_ii(model) {
       row++;
     }
   }
-  return { "dots": dots };
+  return { "dots": dots,"nns": nns};
 }
 function report_svg(path, tree, _reports) {
   const role = path.split(".").slice(-1) == "Govern"
