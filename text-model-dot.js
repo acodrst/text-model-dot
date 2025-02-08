@@ -1,3 +1,13 @@
+const ids = new Set();
+const chars = "abcdefghijklmnopqrstuvwxyz0123456789";
+function rn() {
+  let id;
+  const one = chars[Math.floor(Math.random() * 26)];
+  const rest = () => chars[Math.floor(Math.random() * 36)];
+  do id = one + rest() + rest(); while (ids.has(id));
+  ids.add(id);
+  return id;
+}
 function model_to_dots_ii(model) {
   const num_ids = { "Top": { "dpath": "Top", "path": "0" } };
   const dots = {};
