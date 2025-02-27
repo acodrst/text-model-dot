@@ -1,7 +1,7 @@
 {
   "name": "text-model-dot",
     "version": "1.0.0",
-    "author": "acodrst",
+    "author": "Scott H.",
     "description": "Converts graph stack text into dot format",
     "main": "./text-model-dot",
     "repository": { "type": "git", "url": "git@github.com:acodrst/text-model-dot.git" },
