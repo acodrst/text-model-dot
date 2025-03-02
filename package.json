@@ -1,10 +1,10 @@
 {
   "name": "text-model-dot",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "author": "Scott H.",
   "description": "Converts graph stack text into dot format",
   "main": "./text-model-dot",
   "repository": { "type": "git", "url": "git@github.com:acodrst/text-model-dot.git" },
-  "files": ["text-model-dot.js", "LICENSE", "README.md"],
+  "files": ["text-model-dot.js","example.txt","LICENSE", "README.md"],
   "license": "CC0-1.0"
 }
