@@ -1,0 +1,51 @@
+:: level
+Top
+:: processes
+KorTalos
+:: both
+Govern
+:: locations
+Farmland
+Public
+Generation
+Stores
+Supplies
+Dams
+Hospitals
+:: transforms
+Security
+Shelter
+Food
+Energy
+Water
+Medical
+:: both
+Hospitals
+Supplies
+:: transforms
+Water
+:: back
+Dams
+:: transforms
+Food
+:: both
+Farmland
+:: forward
+Stores
+:: transforms
+Shelter
+:: back
+Public
+:: transforms
+Energy
+:: back
+Generation
+:: agents
+Govern
+:: both
+Security
+Shelter
+Food
+Energy
+Water
+Medical
