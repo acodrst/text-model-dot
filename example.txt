@@ -1,5 +1,76 @@
 :: level
 Top
+Food
+Irrigate
+WL Irrigate
+:: datastores
+Dam DB
+:: both
+Monitor Intake
+Log Valve Changes
+Time Card Entry
+:: processes
+Time Card Entry
+Log Valve Changes
+Monitor Intake
+SMS Texts
+:: both
+Farmers
+:: back
+Time Card Entry
+:: forward
+Town Accountant
+:: agents
+Town Accountant
+Farmers
+Intake
+:: forward
+Monitor Intake
+:: agents
+Liaisons
+:: both
+SMS Texts
+Time Card Entry
+Monitor Intake
+Log Valve Changes
+:: agents
+WL Irrigate
+:: back
+Liaisons
+:: level
+Top
+Food
+Irrigate
+:: locations
+1-Dam West
+1-Dam East
+Reservoir
+2-Dam
+Fields
+:: transforms
+Canal
+:: back
+Reservoir
+:: forward
+Fields
+:: transforms
+Pumping
+:: forward
+Fields
+:: back
+1-Dam West
+1-Dam East
+2-Dam
+:: agents
+Farmers
+WL Irrigate
+:: forward
+Pumping
+Canal
+:: both
+Farmers
+:: level
+Top
 :: processes
 KorTalos
 :: both
@@ -49,3 +120,1034 @@ Food
 Energy
 Water
 Medical
+:: level
+Top
+Food
+Plant
+Planters
+Consolidate
+:: agents
+Farmers
+:: processes
+Load Inventory
+:: both
+Farmers
+:: back
+Field Laptop
+:: forward
+Farmer PC
+:: processes
+Load Moisture
+:: both
+Farmers
+:: forward
+Farmer PC
+:: back
+Field Laptop
+:: processes
+Calculate Purchase
+:: both
+Farmers
+:: both
+Farmer PC
+:: processes
+Calculate Yield
+:: both
+Farmers
+Farmer PC
+:: processes
+Update Sowing Rates
+:: both
+Farmer PC
+Farmers
+:: forward
+Field Laptop
+:: datastores
+Field Laptop
+Farmer PC
+:: level
+Top
+Food
+Plant
+Planters
+:: agents
+Planters
+:: processes
+SMS Text
+:: both
+Farmers
+Planters
+Field Aid
+Planting Lead
+:: processes
+Measure Moisture
+:: back
+Soil
+:: forward
+Field Laptop
+:: both
+Field Aid
+:: processes
+Consolidate
+:: both
+Farmers
+Farmer PC
+Field Laptop
+:: back
+:: datastores
+Farmer PC
+Soil
+Field Laptop
+:: processes
+Planting Guide
+:: both
+Field Aid
+Farmers
+Planters
+Field Laptop
+:: agents
+Farmers
+Field Aid
+Planting Lead
+:: level
+Top
+Food
+Plant
+:: agents
+Planters
+:: datastores
+Cloud Block Storage Service
+Inventory Queen Cloud DB
+:: processes
+Seeder AI
+:: both
+Cloud Block Storage Service
+Planters
+Farmers
+:: subclass_of
+Top.KorTalos.PartnerServices.Kor2Processor
+:: processes
+Wheat Link
+:: both
+Cloud Block Storage Service
+Farmers
+:: subclass_of
+Top.KorTalos.PartnerServices.Kor2Processor
+:: processes
+Inventory Queen Cloud
+WL Plant
+Wheat Link
+SMS Text
+:: both
+Planters
+Planting Lead
+:: processes
+IP Text
+:: both
+Planting Lead
+Planters
+:: processes
+Inventory Queen Cloud
+:: both
+Inventory Queen Cloud DB
+Farmers
+Planters
+:: subclass_of
+Top.KorTalos.PartnerServices.Kor2Processor
+:: agents
+Planting Lead
+Farmers
+Planting Lead
+:: locations
+Field Cameron
+Farm Storage
+Field Jane
+Field Sally
+Field Bob
+:: processes
+WL Plant
+:: both
+Planters
+IP Text
+Planting Lead
+Wheat Link
+:: subclass_of
+Top.KorTalos.PartnerServices.Kor2Processor
+:: transforms
+Sow
+:: both
+Farm Storage
+Planters
+:: forward
+Field Sally
+Field Bob
+Field Cameron
+Field Jane
+:: level
+Top
+Food
+:: transforms
+Irrigate
+:: both
+Wheat Link
+Water
+:: back
+Farmers
+:: forward
+Fields
+:: agents
+Wheat Link
+Farm Help
+Farmers
+:: locations
+Fields
+Stores
+Farm Storage
+Water
+:: agents
+Wheat Link
+:: both
+Farmers
+:: transforms
+Plow
+:: forward
+Fields
+:: back
+Farmers
+:: transforms
+Harvest
+:: back
+Fields
+Farm Help
+:: forward
+Farm Storage
+:: both
+Wheat Link
+:: transforms
+Distribution
+:: both
+Wheat Link
+:: forward
+Stores
+:: back
+Farmers
+Farm Storage
+:: transforms
+Plant
+:: both
+Wheat Link
+Farm Storage
+:: forward
+Fields
+:: both
+Farm Help
+:: level
+Top
+KorTalos
+:: narrative
+Includes all global locations
+:: note
+Highest level of org
+:: processes
+Accounting Services
+:: both
+Accounting
+KorTalos Customers
+HQ Digital Data
+:: processes
+Accounting Services
+:: processes
+Accounting Services
+:: narrative
+This only includes the 5th floor (Operations) accounting.
+:: processes
+Accounting Services
+:: note
+5th Floor
+:: processes
+Customer Services
+:: both
+KorTalos Customers
+HQ Digital Data
+Operations
+:: processes
+Customer Services
+:: forward
+Customer Leads
+:: processes
+Customer Services
+:: processes
+Customer Services
+:: narrative
+All B2C products, including mobile app
+:: processes
+Partner Services
+:: both
+HQ Digital Data
+HQ Alternate Media
+Environmental Measurements
+Hospital Supply Partner
+Oceanic Operations
+Operations
+Shipping and Logistics
+:: processes
+Partner Services
+:: processes
+Partner Services
+:: narrative
+Collaborative efforts with other companies, primarily via the Kor acquisition run by Laura Talos and Tula Garmon
+:: processes
+Partner Services
+:: note
+No direct revenue, just references and leads.
+:: processes
+Customer Support
+:: both
+Customer Support Team
+KorTalos Customers
+HQ Digital Data
+HQ Alternate Media
+:: processes
+Customer Support
+:: processes
+Customer Support
+:: narrative
+***Support for all B2B products, including the mobile app***
+:: processes
+Telephonic
+:: both
+Customer Support Team
+KorTalos Customers
+:: processes
+Telephonic
+:: processes
+Telephonic
+:: narrative
+Voice support for products via SuperbigTelco and DistruptiveVOIPInc 
+:: processes
+Customer Relationship Manager
+:: both
+HQ Digital Data
+Field Sales Team
+Customer Leads
+Marketing and Sales
+:: processes
+Customer Relationship Manager
+:: forward
+Product Acceptance
+:: processes
+Customer Relationship Manager
+:: processes
+Customer Relationship Manager
+:: narrative
+Includes all marketing and inside sales
+:: processes
+Field Sales
+:: both
+HQ Alternate Media
+Field Sales Team
+Customer Leads
+:: processes
+Field Sales
+:: processes
+Field Sales
+:: narrative
+All outside sales, including international
+:: processes
+Product Acceptance
+:: both
+Operational Intelligence and Management
+Product Development DB
+Engineering India
+Engineering USA
+Product Team
+:: processes
+Product Acceptance
+:: processes
+Product Acceptance
+:: narrative
+Approval of new products created by dev teams
+:: processes
+Business Intelligence and Management
+:: both
+Accounting
+HQ Digital Data
+Executives
+Marketing and Sales
+:: processes
+Business Intelligence and Management
+:: processes
+Business Intelligence and Management
+:: narrative
+Reporting, analytics, and forecasting.
+:: processes
+Operational Intelligence and Management
+:: both
+Accounting
+Customer Support Team
+HQ Digital Data
+Executives
+Operations
+Marketing and Sales
+:: processes
+Operational Intelligence and Management
+:: processes
+Operational Intelligence and Management
+:: narrative
+Monitoring, dashboards, correlation, and prediction using operational metrics
+:: processes
+Product Development
+:: both
+HQ Alternate Media
+Product Development DB
+Engineering India
+Engineering USA
+Product Team
+:: processes
+Product Development
+:: processes
+Product Development
+:: narrative
+Creation of B2C and products by US and India engineering teams
+:: agents
+Accounting
+:: agents
+Customer Support Team
+:: agents
+KorTalos Customers
+:: datastores
+HQ Digital Data
+:: datastores
+HQ Alternate Media
+:: datastores
+Product Development DB
+:: agents
+Engineering India
+:: agents
+Engineering USA
+:: agents
+Environmental Measurements
+:: agents
+Executives
+:: agents
+Field Sales Team
+:: agents
+Hospital Supply Partner
+:: agents
+Customer Leads
+:: agents
+Oceanic Operations
+:: agents
+Operations
+:: agents
+Product Team
+:: agents
+Marketing and Sales
+:: agents
+Shipping and Logistics
+:: level
+Top
+KorTalos
+Operational Intelligence and Management
+:: processes
+Monitoring
+:: both
+IT Operations
+:: processes
+Monitoring
+:: processes
+Monitoring
+:: narrative
+Here is the main network
+:: agents
+IT Operations
+:: level
+Top
+KorTalos
+Product Development
+:: processes
+AI Feeder
+:: both
+AIF Database
+Engineering India
+Network Devices
+Engineering US
+:: processes
+AI Feeder
+:: datastores
+AIF Database
+:: agents
+Engineering India
+:: agents
+Network Devices
+:: agents
+Engineering US
+:: level
+Top
+KorTalos
+Accounting Services
+:: processes
+Accounts Receivable
+:: both
+Honest Abe Collections
+Accounts Receivable Staff
+Accounting Database
+:: processes
+Accounts Receivable
+:: processes
+Accounts Receivable
+:: narrative
+Junie and Bob handle all A/R
+:: processes
+Accounts Payable
+:: both
+Accounts Payable Staff
+Accounting Database
+:: processes
+Accounts Payable
+:: processes
+Accounts Payable
+:: narrative
+Accounts Payable
+:: processes
+Honest Abe Collections
+:: both
+Honest Abe Collections
+:: processes
+Honest Abe Collections
+:: processes
+Honest Abe Collections
+:: narrative
+Our primary outside collections agency
+:: agents
+Accounts Payable Staff
+:: agents
+Accounts Receivable Staff
+:: agents
+Honest Abe Collections
+:: datastores
+Accounting Database
+:: level
+Top
+KorTalos
+Customer Services
+:: processes
+Track The Trackers
+:: both
+KorTalos Customers
+Tracker DB
+:: processes
+Track The Trackers
+:: processes
+Track The Trackers
+:: narrative
+Junie and Bob handle all A/R 
+:: agents
+KorTalos Customers
+:: datastores
+Tracker DB
+:: level
+Top
+KorTalos
+Partner Services
+Kor2 Processor
+:: processes
+Seeder AI
+Wheat Link
+Inventory Queen Cloud
+WL Plant
+:: datastores
+Partner DB
+:: both 
+Seeder AI
+Wheat Link
+Inventory Queen Cloud
+WL Plant
+:: level
+Top
+KorTalos
+Partner Services
+:: processes
+Kor2 Processor
+:: both
+Old Kor Datastore
+New Kor Datastore
+Partner DB
+Partner Reach
+:: processes
+Kor2 Processor
+:: processes
+Kor2 Processor
+:: narrative
+Junie and Bob handle all A/R 
+:: datastores
+Old Kor Datastore
+:: datastores
+New Kor Datastore
+:: datastores
+Partner DB
+:: agents
+Partner Reach
+:: level
+Top
+KorTalos
+Customer Support
+:: processes
+CloudPrem Service Desk
+:: both
+CloudPrem DB
+Service Desk
+:: processes
+CloudPrem Service Desk
+:: processes
+CloudPrem Service Desk
+:: narrative
+Junie and Bob handle all A/R
+:: datastores
+CloudPrem DB
+:: agents
+Service Desk
+:: level
+Top
+KorTalos
+Telephonic
+:: processes
+Twisted Pair Bonus
+:: both
+Superbig Telco
+DDisruptive VOIPInc
+Customer Support Team
+TP DB
+:: processes
+Twisted Pair Bonus
+:: processes
+Twisted Pair Bonus
+:: narrative
+Combines providers
+:: processes
+Superbig Telco
+:: both
+SB
+:: processes
+Superbig Telco
+:: processes
+Superbig Telco
+:: narrative
+US and India services are provided by SuperbigTelco
+:: processes
+DDisruptive VOIPInc
+:: both
+VOIPInc
+:: processes
+DDisruptive VOIPInc
+:: processes
+DDisruptive VOIPInc
+:: narrative
+asfd
+:: agents
+Customer Support Team
+:: datastores
+TP DB
+:: datastores
+SB
+:: datastores
+VOIPInc
+:: level
+Top
+KorTalos
+Customer Relationship Manager
+Contracts
+:: processes
+Legal Review
+:: both
+Chief Financial Officers
+Chief Security Officer
+:: processes
+Legal Review
+:: processes
+Legal Review
+:: note
+This is a gate.  No contracts go out without this process.
+:: agents
+Chief Financial Officers
+:: agents
+Chief Security Officer
+:: level
+Top
+KorTalos
+Customer Relationship Manager
+Snail Mail Import
+:: processes
+Tray Firmware
+:: back
+Input Tray
+:: processes
+Tray Firmware
+:: processes
+Tray Firmware
+:: note
+Old style firmware tray
+:: datastores
+Input Tray
+:: level
+Top
+KorTalos
+Customer Relationship Manager
+Monthly
+:: processes
+Fill Mailers
+:: both
+Manilla Envelopes
+:: processes
+Fill Mailers
+:: agents
+Manilla Envelopes
+:: level
+Top
+KorTalos
+Customer Relationship Manager
+Social Fanisizer
+:: processes
+Fanisizer Cloud
+:: back
+User Activity For Sale
+:: processes
+Fanisizer Cloud
+:: both
+Super Cloud Database
+Identity Storage
+Digital Marketing
+Super Cloud Database Support
+:: processes
+Fanisizer Cloud
+:: processes
+IdentiTroll
+:: both
+Identity Storage
+User Activity For Sale
+Fodder and Mudder
+Grandmothers and PeePaws
+Government Leaders
+Troll Farms and Meat Tools
+:: processes
+IdentiTroll
+:: processes
+Ad Targeting Engine
+:: both
+Media Outlets
+Identity Storage
+User Activity For Sale
+:: processes
+Ad Targeting Engine
+:: processes
+Media Outlets
+:: both
+Fodder and Mudder
+Grandmothers and PeePaws
+Government Leaders
+Super Cloud Database Support
+:: processes
+Media Outlets
+:: datastores
+Super Cloud Database
+:: datastores
+Identity Storage
+:: datastores
+User Activity For Sale
+:: agents
+Digital Marketing
+:: agents
+Fodder and Mudder
+:: agents
+Grandmothers and PeePaws
+:: agents
+Government Leaders
+:: agents
+Super Cloud Database Support
+:: agents
+Troll Farms and Meat Tools
+:: level
+Top
+KorTalos
+Customer Relationship Manager
+:: processes
+Snail Mail Import
+:: back
+Returned Cards
+:: processes
+Snail Mail Import
+:: both
+Central Administration Services
+Mail Room Staff
+:: processes
+Snail Mail Import
+:: forward
+Lead Addresses
+Lead Activity
+:: processes
+Snail Mail Import
+:: processes
+Snail Mail Import
+:: narrative
+The Snail Mail Import uses mechanical feed trays and optical character recognition to process the cards sent out by marketing and sales that are returned to KorTalos. This started in 1999.
+:: processes
+Snail Mail Import
+:: note
+Program that uses reader for cards to perform OCR.
+:: processes
+Billing Integration
+:: back
+A-R
+Central Administration Services
+:: processes
+Billing Integration
+:: forward
+Bulk Card Print
+:: processes
+Billing Integration
+:: processes
+Billing Integration
+:: narrative
+This is really the most fabulous article.
+:: processes
+Mail Room Receiving
+:: back
+Mail
+:: processes
+Mail Room Receiving
+:: forward
+Returned Cards
+:: processes
+Mail Room Receiving
+:: processes
+Mail
+:: back
+Bulk Cards
+:: processes
+Mail
+:: both
+Mail Room Staff
+Outside Leads
+Postal Employee
+:: processes
+Mail
+:: processes
+Monthly
+:: back
+Creatives
+Lead Addresses
+:: processes
+Monthly
+:: both
+HQ Sales
+Marketing
+:: processes
+Monthly
+:: forward
+Bulk Card Print
+:: processes
+Monthly
+:: processes
+Monthly
+:: narrative
+Sales and Marketing submit the latest creatives by the 22nd of each month.  The first Monday of the following month, mailers are sent out in plain manilla envelopes.
+:: processes
+Social Fanisizer
+:: back
+Lead Addresses
+:: processes
+Social Fanisizer
+:: both
+HQ Content
+Digital Marketing
+Marketing
+Outside Leads
+:: processes
+Social Fanisizer
+:: forward
+Constant Email Service
+:: processes
+Social Fanisizer
+:: processes
+Social Fanisizer
+:: narrative
+Most of the Fanisizer infrastructure is built out in the East datacenter, but due to a mistake in 2007, the database is housed on the other side of the country with a 100Mbit point-to-point dedicated circuit.
+:: processes
+Bulk Card Print
+:: both
+Mail Room Staff
+:: processes
+Bulk Card Print
+:: forward
+Bulk Cards
+:: processes
+Bulk Card Print
+:: processes
+Constant Email Service
+:: back
+Lead Addresses
+:: processes
+Constant Email Service
+:: forward
+Outside Leads
+:: processes
+Constant Email Service
+:: processes
+A-R
+:: back
+A-R Database
+:: processes
+A-R
+:: processes
+A-R
+:: narrative
+Translates from V12.2 to V13.9 and above
+:: processes
+Service Bureau API
+:: both
+Service Bureau Database
+:: processes
+Service Bureau API
+:: forward
+Creatives
+:: processes
+Service Bureau API
+:: processes
+Contracts
+:: both
+HQ Sales
+:: processes
+Contracts
+:: processes
+Reporting
+:: both
+HQ Sales
+Marketing
+:: processes
+Reporting
+:: agents
+Central Administration Services
+:: agents
+HQ Content
+:: datastores
+Creatives
+:: datastores
+Lead Addresses
+:: datastores
+Bulk Cards
+:: datastores
+A-R Database
+:: datastores
+Returned Cards
+:: datastores
+Service Bureau Database
+:: datastores
+Lead Activity
+:: agents
+Digital Marketing
+:: agents
+HQ Sales
+:: agents
+Mail Room Staff
+:: agents
+Marketing
+:: agents
+Outside Leads
+:: agents
+Postal Employee
+:: level
+Top
+KorTalos
+Field Sales
+Buzz
+:: processes
+Entry Screen
+:: both
+Buzz
+:: processes
+Entry Screen
+:: datastores
+Buzz
+:: level
+Top
+KorTalos
+Field Sales
+:: processes
+Buzz
+:: both
+Buzz
+Field Sales Team
+:: processes
+Buzz
+:: processes
+Buzz
+:: narrative
+Buzz Word was purchased in 1998. 
+:: processes
+Auto
+:: both
+Customer Leads
+:: processes
+Auto
+:: processes
+Auto
+:: narrative
+Auto Voice stuff
+:: agents
+Customer Leads
+:: datastores
+Buzz
+:: agents
+Field Sales Team
+:: level
+Top
+KorTalos
+Product Acceptance
+:: processes
+BugScan
+:: both
+BugScan DB
+QA
+:: processes
+BugScan
+:: processes
+BugScan
+:: narrative
+Junie and Bob handle all A/R
+:: datastores
+BugScan DB
+:: agents
+QA
+:: level
+Top
+KorTalos
+Business Intelligence and Management
+:: processes
+Downward Slide Analysis Engine
+:: both
+HQ Digital Data
+DS Database
+Executives
+:: processes
+Downward Slide Analysis Engine
+:: processes
+Downward Slide Analysis Engine
+:: narrative
+DSA provides analytics to determine operational inefficiencies, but, ironically, is one of the most expensive software packages we have ever purchased at KorTalos.  We keep losing IT staff, that take the training on the cube modeling, to other companies, as they are worried about their future.
+:: processes
+OpLoggsRWE Correlation Engine
+:: both
+HQ Digital Data
+Executives
+:: processes
+OpLoggsRWE Correlation Engine
+:: processes
+OpLoggsRWE Correlation Engine
+:: narrative
+OpLoggsRWE correlates operational events.
+:: datastores
+HQ Digital Data
+:: datastores
+DS Database
+:: agents
+Executives
