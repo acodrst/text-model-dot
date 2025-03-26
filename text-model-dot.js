@@ -68,7 +68,7 @@ function model_to_dots(model) {
     }
   }
   let row = 0;
-  let data_id = 1;
+  let data_id = 0;
   for (const line of model.trim().split(/\s*\n+\s*/)) {
     if (line.slice(0, 2) != "//") {
       const l_lbl = line.replace(/ /g, "\\n");
@@ -77,7 +77,7 @@ function model_to_dots(model) {
         last_command = line.split(":: ")[1];
         if (last_command == "level") {
           level = [];
-          data_id = 1;
+          data_id = 0;
         }
       } else {
         if (last_command != "level") {
@@ -107,7 +107,7 @@ function model_to_dots(model) {
                   if (!p[c]) {
                     p[c] = {
                       "dpath": `${a.slice(0, i + 1).join(".")}`,
-                      "path": `${p["path"]}.${Object.keys(p).length}`,
+                      "path": `${p["path"]}.${Object.keys(p).length-1}`,
                     };
                   }
                   return p[c];
