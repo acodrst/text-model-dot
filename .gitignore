@@ -1,4 +1,5 @@
 .*
+data_sha512.txt
 !.gitignore
 *.backup
 *~
