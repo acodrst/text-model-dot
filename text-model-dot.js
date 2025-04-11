@@ -8,7 +8,7 @@ function rn() {
   ids.add(id);
   return id;
 }
-function model_to_dots(model) {
+function model_to_dots(model,zoom_links) {
   const num_ids = { "Top": { "dpath": "Top", "path": "0" } };
   const dots = {};
   const nns = {};
@@ -126,7 +126,7 @@ function model_to_dots(model) {
                 : "";
               const sub_cl = subclass_of != "" ? "has_subclass " : "";
               if (note != "") note = "note: " + note;
-              const zoom = dots?.[res.dpath] ? "zoomable" : "zoomnotable";
+              const zoom = dots?.[res.dpath] && zoom_links ? "zoomable" : "zoomnotable";
               const note_attached = (narr == line && note == "")
                 ? "notenotattached"
                 : "noteattached";
