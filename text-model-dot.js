@@ -17,6 +17,7 @@ function model_to_dots(model, zoom_links) {
   const num_ids = { "Top": { "dpath": "Top", "path": "0" } };
   const dots = {};
   const nns = {};
+  const levels = new Set();
   let last_level, last_command, last_object, last_predicate, last_subject;
   let level = [];
   let items = [];
@@ -34,6 +35,7 @@ function model_to_dots(model, zoom_links) {
         // create key for level lines
         dots[level.join(".")] = {};
         last_level = level.join(".");
+        levels.add(last_level)
       }
       if (
         ["narrative", "note", "href", "subclass_of"]
@@ -145,6 +147,6 @@ function model_to_dots(model, zoom_links) {
       }
     }
   }
-  return { "dots": dots, "nns": nns };
+  return { "dots": dots, "nns": nns,"levels":levels };
 }
 export { model_to_dots };
