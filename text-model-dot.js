@@ -20,29 +20,33 @@ function model_to_dots(model, zoom_links) {
   const levels = {};
   let last_level,last_command,last_object,last_predicate, last_subject;
   let level = [];
+  let last_level_lines=[]
   let items = [];
-  function set_line(last_level,last_line){
-    levels[last_level]=
-    levels[last_level] || [] 
-    levels[last_level].push(last_line)
+  function set_line(level_id,level_lines,line){
+    levels[level_id]=
+    levels[level_id] || {"level":[],"lines":[]} 
+    levels[level_id].lines.push(line)
+    if (level_lines.length>0) levels[level_id].level=level_lines
   }
   // this run-through is for metadata: narrative, note, href, subclass_of
   // split by whitespace-newline-whitespace
   for (const line of model.trim().split(/\s*\n+\s*/)) {
     if (line.includes("::")) {
-      level = [];
       last_command = line.split(":: ")[1];
-      if (last_command!='level') set_line(last_level,`:: ${last_command}`)
+      if (last_command!='level') set_line(last_level,[],`:: ${last_command}`)
+      level = [];
     } 
     else {
       if (last_command == "level") {
         level.push(ws(line));
         // create key for level lines
+        last_level_lines.push(line)
         dots[level.join(".")] = {};
         last_level = level.join(".");
       }
       else{
-        set_line(last_level,line)
+        set_line(last_level,last_level_lines,line)
+        last_level_lines=[]
       }
       if (
         ["narrative", "note", "href", "subclass_of"]
