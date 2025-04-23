@@ -9,57 +9,53 @@ function rn() {
   ids.add(id);
   return id;
 }
-// model:graph stack text, zoom_links:create zoomable links
 function ws(s) {
   return s.replace(/ /g, "");
 }
+// model:graph stack text, zoom_links:create zoomable links
 function model_to_dots(model, zoom_links) {
   const num_ids = { "Top": { "dpath": "Top", "path": "0" } };
-  const dots = {};
-  const nns = {};
   const levels = {};
-  let last_level,last_command,last_object,last_predicate, last_subject;
+  let last_level, last_command, last_object, last_predicate, last_subject;
   let level = [];
-  let last_level_lines=[]
+  let last_level_lines = [];
   let items = [];
-  function set_line(level_id,level_lines,line){
-    levels[level_id]=
-    levels[level_id] || {"level":[],"lines":[]} 
-    levels[level_id].lines.push(line)
-    if (level_lines.length>0) levels[level_id].level=level_lines
+  function set_line(level_id, level_lines, line) {
+    levels[level_id] = levels[level_id] ||
+      { "aspects": {}, "level": [], "lines": [], "dots": [] };
+    levels[level_id].lines.push(line);
+    if (level_lines.length > 0) levels[level_id].level = level_lines;
   }
   // this run-through is for metadata: narrative, note, href, subclass_of
   // split by whitespace-newline-whitespace
   for (const line of model.trim().split(/\s*\n+\s*/)) {
     if (line.includes("::")) {
       last_command = line.split(":: ")[1];
-      if (last_command!='level') set_line(last_level,[],`:: ${last_command}`)
+      if (last_command != "level") {
+        set_line(last_level, [], `:: ${last_command}`);
+      }
       level = [];
-    } 
-    else {
+    } else {
       if (last_command == "level") {
         level.push(ws(line));
         // create key for level lines
-        last_level_lines.push(line)
-        dots[level.join(".")] = {};
+        last_level_lines.push(line);
         last_level = level.join(".");
-      }
-      else{
-        set_line(last_level,last_level_lines,line)
-        last_level_lines=[]
+      } else {
+        set_line(last_level, last_level_lines, line);
+        last_level_lines = [];
       }
       if (
         ["narrative", "note", "href", "subclass_of"]
           .includes(last_command)
       ) {
         // create key for level-subject if it isn't there
-        nns[`${last_level}.${ws(last_subject)}`] =
-          nns[`${last_level}.${ws(last_subject)}`] ||
-          {};
-        // set metadata for level-subject
-        nns[`${last_level}.${ws(last_subject)}`][last_command] = line;
+        levels[last_level].aspects[ws(last_subject)] =
+          levels[last_level].aspects[ws(last_subject)] || {};
+        levels[last_level].aspects[ws(last_subject)][last_command] =
+          levels[last_level].aspects[ws(last_subject)][last_command] || [];
+        levels[last_level].aspects[ws(last_subject)][last_command].push(line);
       }
-      // reset last subject
       if (
         ["processes", "datastores", "transforms", "agents", "locations"]
           .includes(last_command)
@@ -89,12 +85,13 @@ function model_to_dots(model, zoom_links) {
           ["processes", "datastores", "transforms", "agents", "locations"]
             .includes(last_command)
         ) {
-          const href = nns[`${level.join(".")}.${ws(line)}`]
-            ?.href || "";
+          const href = levels[level.join(".")].aspects?.[ws(line)]?.href || "";
           if (["datastores", "locations"].includes(last_command)) {
             data_id++;
-            dots[level.join(".")][line] =
-              `"${line}" [id="${rn()}" xhref="${href}" color="#cc3311" shape="record" class="${last_command}" label="<f0> R${data_id}|<f1> ${l_lbl} "]`;
+            levels[level.join(".")].dots.push(
+              `"${line}" [id="${rn()}" xhref="${href}" color="#cc3311" shape="record"
+             class="${last_command}" label="<f0> R${data_id}|<f1> ${l_lbl} "]`,
+            );
           }
           if (["transforms", "processes"].includes(last_command)) {
             // figure out the depth for the number
@@ -110,28 +107,38 @@ function model_to_dots(model, zoom_links) {
               },
               num_ids,
             );
-            const subclass_of = nns[`${level.join(".")}.${ws(line)}`]
-              ?.subclass_of || "";
-            const narr = nns[`${level.join(".")}.${ws(line)}`]
-              ?.narrative || line;
-            let note = nns[`${level.join(".")}.${ws(line)}`]
-              ?.note || "";
+            const subclass_of_array =
+              levels[level.join(".")].aspects?.[ws(line)]?.subclass_of || [];
+            const subclass_of = subclass_of_array.join("");
+            const narr_array =
+              levels[level.join(".")].aspects?.[ws(line)]?.narrative || [];
+            const narr = narr_array.join("");
+            const note_array =
+              levels[level.join(".")].aspects?.[ws(line)]?.note || [];
+            let note = note_array.join("");
             const sub_href = subclass_of != "" ? `href="#${subclass_of}"` : "";
             const sub_cl = subclass_of != "" ? "has_subclass " : "";
             if (note != "") note = "note: " + note;
-            const zoom = dots?.[res.dpath] && zoom_links
+            const zoom = levels?.[res.dpath] && zoom_links
               ? "zoomable"
               : "zoomnotable";
-            const note_attached = (narr == line && note == "")
+            const note_attached = (narr == "" && note == "")
               ? "notenotattached"
               : "noteattached";
-            dots[level.join(".")][line] = zoom == "zoomnotable"
-              ? `"${line}" [id="${rn()}" xhref="${href}" tooltip="${narr}\n${note}" color="#33bbee" ${sub_href} shape="rectangle" style="rounded" class="${sub_cl}${last_command} ${zoom} ${note_attached}" label="${res.path}\n${l_lbl}"]`
-              : `"${line}" [id="${rn()}" xhref="${href}" tooltip="${narr}\n${note}" color="#33bbee" href="#${res.dpath}" shape="rectangle" style="rounded" class="${last_command} ${zoom} ${note_attached}" label="${res.path}\n${l_lbl}"]`;
+            zoom == "zoomnotable"
+              ? levels[level.join(".")].dots.push(
+                `"${line}" [id="${rn()}" xhref="${href}" tooltip="${narr}\n${note}"
+               color="#33bbee" ${sub_href} shape="rectangle" style="rounded" class="${sub_cl}${last_command} ${zoom} ${note_attached}" label="${res.path}\n${l_lbl}"]`,
+              )
+              : levels[level.join(".")].dots.push(
+                `"${line}" [id="${rn()}" xhref="${href}" tooltip="${narr}\n${note}"
+               color="#33bbee" href="#${res.dpath}" shape="rectangle" style="rounded" class="${last_command} ${zoom} ${note_attached}" label="${res.path}\n${l_lbl}"]`,
+              );
           }
           if ("agents" == last_command) {
-            dots[level.join(".")][line] =
-              `"${line}" [id="${rn()}" xhref="${href}" color="#009988" shape="rectangle" class="${last_command}" label="${l_lbl}" ]`;
+            levels[level.join(".")].dots.push(
+              `"${line}" [id="${rn()}" xhref="${href}" color="#009988" shape="rectangle" class="${last_command}" label="${l_lbl}" ]`,
+            );
           }
           last_subject = line;
         } else {
@@ -139,17 +146,17 @@ function model_to_dots(model, zoom_links) {
             items = [];
             last_object = line;
             last_predicate = last_command;
-            dots[level.join(".")][
-              last_subject + "." + last_command + "." + last_object
-            ] = `"${last_subject}" -> "${line}" [ dir="${last_predicate}"]`;
+            levels[level.join(".")].dots.push(
+              `"${last_subject}" -> "${line}" [ dir="${last_predicate}"]`,
+            );
           } else {
             if (["items"].includes(last_command)) {
               items.push(line);
-              dots[level.join(".")][
-                last_subject + "." + last_predicate + "." + last_object
-              ] = `"${last_subject}" -> "${last_object}" [tooltip="${
-                items.join("\n")
-              }" dir="${last_predicate}"]`;
+              levels[level.join(".")].dots.push(
+                `"${last_subject}" -> "${last_object}" [tooltip="${
+                  items.join("\n")
+                }" dir="${last_predicate}"]`,
+              );
             }
           }
         }
@@ -158,6 +165,6 @@ function model_to_dots(model, zoom_links) {
       }
     }
   }
-  return { "dots": dots, "nns": nns,"levels":levels };
+  return levels;
 }
 export { model_to_dots };

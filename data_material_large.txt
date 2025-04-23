@@ -1059,26 +1059,6 @@ Postal Employee
 Top
 KorTalos
 Field Sales
-Buzz
-:: processes
-Entry Screen
-:: both
-Buzz
-:: processes
-Entry Screen
-:: datastores
-Buzz
-:: level
-Top
-KorTalos
-Field Sales
-:: processes
-Buzz
-:: both
-Buzz
-Field Sales Team
-:: processes
-Buzz
 :: processes
 Buzz
 :: narrative
@@ -1087,18 +1067,36 @@ Buzz Word was purchased in 1998.
 Auto
 :: both
 Customer Leads
-:: processes
-Auto
-:: processes
-Auto
 :: narrative
 Auto Voice stuff
 :: agents
 Customer Leads
 :: datastores
+Buzz DB
+:: both
 Buzz
 :: agents
 Field Sales Team
+:: both
+Buzz
+:: level
+Top
+KorTalos
+Field Sales
+Buzz
+:: processes
+Buzz
+Entry Screen
+:: both
+Buzz
+:: datastores
+Buzz DB
+:: both
+Buzz
+:: agents
+Field Sales Team
+:: both
+Buzz
 :: level
 Top
 KorTalos
@@ -1128,10 +1126,6 @@ Downward Slide Analysis Engine
 HQ Digital Data
 DS Database
 Executives
-:: processes
-Downward Slide Analysis Engine
-:: processes
-Downward Slide Analysis Engine
 :: narrative
 DSA provides analytics to determine operational inefficiencies, but, ironically, is one of the most expensive software packages we have ever purchased at KorTalos.  We keep losing IT staff, that take the training on the cube modeling, to other companies, as they are worried about their future.
 :: processes
@@ -1139,10 +1133,6 @@ OpLoggsRWE Correlation Engine
 :: both
 HQ Digital Data
 Executives
-:: processes
-OpLoggsRWE Correlation Engine
-:: processes
-OpLoggsRWE Correlation Engine
 :: narrative
 OpLoggsRWE correlates operational events.
 :: datastores
