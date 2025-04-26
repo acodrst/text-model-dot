@@ -29,38 +29,41 @@ function model_to_dots(model, zoom_links) {
   // this run-through is for metadata: narrative, note, href, subclass_of
   // split by whitespace-newline-whitespace
   for (const line of model.trim().split(/\s*\n+\s*/)) {
-    if (line.includes("::")) {
-      last_command = line.split(":: ")[1];
-      if (last_command != "level") {
-        set_line(last_level, [], `:: ${last_command}`);
-      }
-      level = [];
-    } else {
-      if (last_command == "level") {
-        level.push(ws(line));
-        // create key for level lines
-        last_level_lines.push(line);
-        last_level = level.join(".");
+    if (!line.includes('//')) {
+      if (line.includes("::")) {
+        last_command = line.split(":: ")[1];
+        if (last_command != "level") {
+          set_line(last_level, [], `:: ${last_command}`);
+        }
+        level = [];
       } else {
-        set_line(last_level, last_level_lines, line);
-        last_level_lines = [];
-      }
-      if (
-        ["narrative", "note", "href", "subclass_of"]
-          .includes(last_command)
-      ) {
-        // create key for level-subject if it isn't there
-        levels[last_level].aspects[ws(last_subject)] =
-          levels[last_level].aspects[ws(last_subject)] || {};
-        levels[last_level].aspects[ws(last_subject)][last_command] =
-          levels[last_level].aspects[ws(last_subject)][last_command] || [];
-        levels[last_level].aspects[ws(last_subject)][last_command].push(line);
-      }
-      if (
-        ["processes", "datastores", "transforms", "agents", "locations"]
-          .includes(last_command)
-      ) {
-        last_subject = line;
+        if (last_command == "level") {
+          level.push(ws(line));
+          // create key for level lines
+          last_level_lines.push(line);
+          last_level = level.join(".");
+        } else {
+          set_line(last_level, last_level_lines, line);
+          last_level_lines = [];
+        }
+        if (
+          ["narrative", "note", "href", "subclass_of"]
+            .includes(last_command)
+        ) {
+          // create key for level-subject if it isn't there
+          levels[last_level].aspects[ws(last_subject)] =
+            levels[last_level].aspects[ws(last_subject)] || {};
+          levels[last_level].aspects[ws(last_subject)][last_command] =
+            levels[last_level].aspects[ws(last_subject)][last_command] || [];
+          levels[last_level].aspects[ws(last_subject)][last_command].push(line);
+        }
+        if (
+          ["processes", "datastores", "transforms", "agents", "locations"]
+            .includes(last_command)
+        ) {
+          last_subject = line;
+        }
+        if (last_command=='level') last_subject=last_level
       }
     }
   }
