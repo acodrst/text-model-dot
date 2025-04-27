@@ -1,6 +1,6 @@
 {
   "name": "text-model-dot",
-  "version": "1.0.13",
+  "version": "1.0.14",
   "author": "Scott H.",
   "description": "Converts graph stack text into dot format",
   "main": "./text-model-dot",

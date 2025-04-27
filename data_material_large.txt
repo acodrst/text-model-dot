@@ -1,5 +1,60 @@
 :: level
 Top
+:: narrative
+Everybody in the town should know what these entities are.
+:: processes
+KorTalos
+:: href
+https://orng.org/#oet
+:: both
+Govern
+:: locations
+Farmland
+Public
+Generation
+Stores
+Supplies
+Dams
+Hospitals
+:: transforms
+Security
+Shelter
+Food
+Energy
+Water
+Medical
+:: both
+Hospitals
+Supplies
+:: transforms
+Water
+:: back
+Dams
+:: transforms
+Food
+:: both
+Farmland
+:: forward
+Stores
+:: transforms
+Shelter
+:: back
+Public
+:: transforms
+Energy
+:: back
+Generation
+:: agents
+Govern
+:: both
+Security
+Shelter
+Food
+Energy
+Water
+Medical
+:: level
+Top
 Food
 Irrigate
 WL Irrigate
@@ -69,57 +124,6 @@ Pumping
 Canal
 :: both
 Farmers
-:: level
-Top
-:: processes
-KorTalos
-:: both
-Govern
-:: locations
-Farmland
-Public
-Generation
-Stores
-Supplies
-Dams
-Hospitals
-:: transforms
-Security
-Shelter
-Food
-Energy
-Water
-Medical
-:: both
-Hospitals
-Supplies
-:: transforms
-Water
-:: back
-Dams
-:: transforms
-Food
-:: both
-Farmland
-:: forward
-Stores
-:: transforms
-Shelter
-:: back
-Public
-:: transforms
-Energy
-:: back
-Generation
-:: agents
-Govern
-:: both
-Security
-Shelter
-Food
-Energy
-Water
-Medical
 :: level
 Top
 Food

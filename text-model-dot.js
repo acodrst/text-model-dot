@@ -29,7 +29,7 @@ function model_to_dots(model, zoom_links) {
   // this run-through is for metadata: narrative, note, href, subclass_of
   // split by whitespace-newline-whitespace
   for (const line of model.trim().split(/\s*\n+\s*/)) {
-    if (!line.includes('//')) {
+    if (!line.includes('^//')) {
       if (line.includes("::")) {
         last_command = line.split(":: ")[1];
         if (last_command != "level") {
