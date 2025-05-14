@@ -29,7 +29,7 @@ function model_to_dots(model, zoom_links) {
   // this run-through is for metadata: narrative, note, href, subclass_of
   // split by whitespace-newline-whitespace
   for (const line of model.trim().split(/\s*\n+\s*/)) {
-    if (!line.includes('^//')) {
+    if (!line.includes("^//")) {
       if (line.includes("::")) {
         last_command = line.split(":: ")[1];
         if (last_command != "level") {
@@ -63,7 +63,7 @@ function model_to_dots(model, zoom_links) {
         ) {
           last_subject = line;
         }
-        if (last_command=='level') last_subject=last_level
+        if (last_command == "level") last_subject = last_level;
       }
     }
   }
@@ -113,15 +113,12 @@ function model_to_dots(model, zoom_links) {
             const subclass_of_array =
               levels[level.join(".")].aspects?.[ws(line)]?.subclass_of || [];
             const subclass_of = subclass_of_array.join("");
-            const narr_array =
-              levels[level.join(".")].aspects?.[ws(line)]?.narrative || [];
-            const narr = narr_array.join("");
-            const note_array =
-              levels[level.join(".")].aspects?.[ws(line)]?.note || [];
-            let note = note_array.join("");
+            const narr =
+              levels[level.join(".")].aspects?.[ws(line)]?.narrative || "";
+            const note = levels[level.join(".")].aspects?.[ws(line)]?.note ||
+              "";
             const sub_href = subclass_of != "" ? `href="#${subclass_of}"` : "";
             const sub_cl = subclass_of != "" ? "has_subclass " : "";
-            if (note != "") note = "note: " + note;
             const zoom = levels?.[res.dpath] && zoom_links
               ? "zoomable"
               : "zoomnotable";
