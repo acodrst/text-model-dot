@@ -1,9 +1,13 @@
 :: level
 Top
 :: narrative
-Everybody in the town should know what these entities are.
+Everybody in the town should know what these entities are.  Everybody in the town should know what these entities are.  Everybody in the town should know what these entities are.
 :: processes
 KorTalos
+:: narrative
+Includes all global locations
+:: note
+Highest level of org
 :: href
 https://orng.org/#oet
 :: both
@@ -348,10 +352,6 @@ Farm Help
 :: level
 Top
 KorTalos
-:: narrative
-Includes all global locations
-:: note
-Highest level of org
 :: processes
 Accounting Services
 :: both
