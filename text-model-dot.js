@@ -12,10 +12,23 @@ function rn() {
 function ws(s) {
   return s.replace(/ /g, "");
 }
-// model:graph stack text, zoom_links:create zoomable links
-function model_to_dots(model, zoom_links) {
+function det_sub(l_nd,level,levels,sub_obj) {
+  for (let i in levels){
+  for (let j in levels[i].aspects){
+    if (levels[i]?.aspects?.[j]?.subclass_of==sub_obj) {
+      levels.obj_set.add(`${i}.${j}`)
+      if (`${i}.${j}`.includes(`${level.join(".")}.${l_nd}`) ) {
+        return "todo"
+    }
+  }
+  }
+  }
+  return ''
+} 
+// model:graph stack text, zoom_links:create zoomable links, sub_obj: object text for child subclass_of
+function model_to_dots(model, zoom_links, sub_obj) {
   const num_ids = { "Top": { "dpath": "Top", "path": "0" } };
-  const levels = {};
+  const levels = {"obj_set":new Set()};
   let last_level, last_command, last_object, last_predicate, last_subject;
   let level = [];
   let last_level_lines = [];
@@ -53,9 +66,7 @@ function model_to_dots(model, zoom_links) {
           // create key for level-subject if it isn't there
           levels[last_level].aspects[ws(last_subject)] =
             levels[last_level].aspects[ws(last_subject)] || {};
-          levels[last_level].aspects[ws(last_subject)][last_command] =
-            levels[last_level].aspects[ws(last_subject)][last_command] || [];
-          levels[last_level].aspects[ws(last_subject)][last_command].push(line);
+            levels[last_level].aspects[ws(last_subject)][last_command]=line
         }
         if (
           ["processes", "datastores", "transforms", "agents", "locations"]
@@ -110,13 +121,9 @@ function model_to_dots(model, zoom_links) {
               },
               num_ids,
             );
-            const subclass_of_array =
-              levels[level.join(".")].aspects?.[ws(line)]?.subclass_of || [];
-            const subclass_of = subclass_of_array.join("");
-            const narr =
-              levels[level.join(".")].aspects?.[ws(line)]?.narrative || "";
-            const note = levels[level.join(".")].aspects?.[ws(line)]?.note ||
-              "";
+            const subclass_of = sub_obj ? det_sub(l_nd,level,levels,sub_obj) : levels[level.join(".")].aspects?.[ws(line)]?.subclass_of || "";
+            const narr = levels[level.join(".")].aspects?.[ws(line)]?.narrative || "";
+            const note = levels[level.join(".")].aspects?.[ws(line)]?.note || "";
             const sub_href = subclass_of != "" ? `href="#${subclass_of}"` : "";
             const sub_cl = subclass_of != "" ? "has_subclass " : "";
             const zoom = levels?.[res.dpath] && zoom_links
@@ -132,7 +139,7 @@ function model_to_dots(model, zoom_links) {
               )
               : levels[level.join(".")].dots.push(
                 `"${line}" [id="${rn()}" xhref="${href}" tooltip="${narr}\n${note}"
-               color="#33bbee" href="#${res.dpath}" shape="rectangle" style="rounded" class="${last_command} ${zoom} ${note_attached}" label="${res.path}\n${l_lbl}"]`,
+               color="#33bbee" href="#${res.dpath}" shape="rectangle" style="rounded" class="${sub_cl}${last_command} ${zoom} ${note_attached}" label="${res.path}\n${l_lbl}"]`,
               );
           }
           if ("agents" == last_command) {
