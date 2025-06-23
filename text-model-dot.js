@@ -13,8 +13,8 @@ function ws(s) {
   return s.replace(/ /g, "");
 }
 function det_sub(l_nd, level, levels, sub_obj) {
-  for (let i in levels) {
-    for (let j in levels[i].aspects) {
+  for (const i in levels) {
+    for (const j in levels[i].aspects) {
       if (levels[i]?.aspects?.[j]?.subclass_of == sub_obj) {
         levels.obj_set.add(`${i}.${j}`);
         if (`${i}.${j}`.includes(`${level.join(".")}.${l_nd}`)) {
@@ -42,22 +42,20 @@ function model_to_dots(model, zoom_links, sub_obj) {
   // this run-through is for metadata: narrative, note, href, subclass_of
   // split by whitespace-newline-whitespace
   for (const line of model.trim().split(/\s*\n+\s*/)) {
-    if (!line.includes("^//")) {
+    if (!line.match(/^\/\//)) {
       if (line.includes("::")) {
         last_command = line.split(":: ")[1];
         if (last_command != "level") {
           set_line(last_level, [], `:: ${last_command}`);
         }
         level = [];
-      } 
-      else {
+      } else {
         if (last_command == "level") {
           level.push(ws(line));
           // create key for level lines
           last_level_lines.push(line);
           last_level = level.join(".");
-        } 
-        else {
+        } else {
           //we aren't a command, and aren't in level
           set_line(last_level, last_level_lines, line);
           last_level_lines = [];
@@ -85,98 +83,103 @@ function model_to_dots(model, zoom_links, sub_obj) {
   let data_id = 0;
   // split by whitespace-newline-whitespace
   for (const line of model.trim().split(/\s*\n+\s*/)) {
-    // labels on nodes split have different lines per word
-    const l_lbl = line.replace(/ /g, "\\n");
-    // levels are tracked without spaces, so if this line captured
-    // use the scrunched version
-    const l_nd = ws(line);
-    if (line.includes("::")) {
-      last_command = line.split(":: ")[1];
-      if (last_command == "level") {
-        level = [];
-        data_id = 0;
-      }
-    } else {
-      if (last_command != "level") {
-        if (
-          ["processes", "datastores", "transforms", "agents", "locations"]
-            .includes(last_command)
-        ) 
-        {
-          const href = levels[level.join(".")].aspects?.[ws(line)]?.href || "";
-          if (["datastores", "locations"].includes(last_command)) {
-            data_id++;
-            levels[level.join(".")].dots.push(
-              `"${line}" [id="${rn()}" xhref="${href}" color="#cc3311" shape="record"
-             class="${last_command}" label="<f0> R${data_id}|<f1> ${l_lbl} "]`,
-            );
-          }
-          if (["transforms", "processes"].includes(last_command)) {
-            // figure out the depth for the number
-            const res = level.concat(l_nd).reduce(
-              (p, c, i, a) => {
-                if (!p[c]) {
-                  p[c] = {
-                    "dpath": `${a.slice(0, i + 1).join(".")}`,
-                    "path": `${p["path"]}.${Object.keys(p).length - 1}`,
-                  };
-                }
-                return p[c];
-              },
-              num_ids,
-            );
-            const subclass_of = sub_obj
-              ? det_sub(l_nd, level, levels, sub_obj)
-              : levels[level.join(".")].aspects?.[ws(line)]?.subclass_of || "";
-            const narr =
-              levels[level.join(".")].aspects?.[ws(line)]?.narrative || "";
-            const note = levels[level.join(".")].aspects?.[ws(line)]?.note ||
-              "";
-            const sub_href = subclass_of != "" ? `href="#${subclass_of}"` : "";
-            const sub_cl = subclass_of != "" ? "has_subclass " : "";
-            const zoom = levels?.[res.dpath] && zoom_links
-              ? "zoomable"
-              : "zoomnotable";
-            const note_attached = (narr == "" && note == "")
-              ? "notenotattached"
-              : "noteattached";
-            zoom == "zoomnotable"
-              ? levels[level.join(".")].dots.push(
-                `"${line}" [id="${rn()}" xhref="${href}" tooltip="${narr}\n${note}"
-               color="#33bbee" ${sub_href} shape="rectangle" style="rounded" class="${sub_cl}${last_command} ${zoom} ${note_attached}" label="${res.path}\n${l_lbl}"]`,
-              )
-              : levels[level.join(".")].dots.push(
-                `"${line}" [id="${rn()}" xhref="${href}" tooltip="${narr}\n${note}"
-               color="#33bbee" href="#${res.dpath}" shape="rectangle" style="rounded" class="${sub_cl}${last_command} ${zoom} ${note_attached}" label="${res.path}\n${l_lbl}"]`,
-              );
-          }
-          if ("agents" == last_command) {
-            levels[level.join(".")].dots.push(
-              `"${line}" [id="${rn()}" xhref="${href}" color="#009988" shape="rectangle" class="${last_command}" label="${l_lbl}" ]`,
-            );
-          }
-          last_subject = line;
-        } else {
-          if (["forward", "back", "both"].includes(last_command)) {
-            items = [];
-            last_object = line;
-            last_predicate = last_command;
-            levels[level.join(".")].dots.push(
-              `"${last_subject}" -> "${line}" [ dir="${last_predicate}"]`,
-            );
-          } else {
-            if (["items"].includes(last_command)) {
-              items.push(line);
-              levels[level.join(".")].dots.push(
-                `"${last_subject}" -> "${last_object}" [tooltip="${
-                  items.join("\n")
-                }" dir="${last_predicate}"]`,
-              );
-            }
-          }
+    if (!line.match(/^\/\//)) {
+      // labels on nodes split have different lines per word
+      const l_lbl = line.replace(/ /g, "\\n");
+      // levels are tracked without spaces, so if this line captured
+      // use the scrunched version
+      const l_nd = ws(line);
+      if (line.includes("::")) {
+        last_command = line.split(":: ")[1];
+        if (last_command == "level") {
+          level = [];
+          data_id = 0;
         }
       } else {
-        level.push(l_nd);
+        if (last_command != "level") {
+          if (
+            ["processes", "datastores", "transforms", "agents", "locations"]
+              .includes(last_command)
+          ) {
+            const href = levels[level.join(".")].aspects?.[ws(line)]?.href ||
+              "";
+            if (["datastores", "locations"].includes(last_command)) {
+              data_id++;
+              levels[level.join(".")].dots.push(
+                `"${line}" [id="${rn()}" xhref="${href}" color="#cc3311" shape="record"
+             class="${last_command}" label="<f0> R${data_id}|<f1> ${l_lbl} "]`,
+              );
+            }
+            if (["transforms", "processes"].includes(last_command)) {
+              // figure out the depth for the number
+              const res = level.concat(l_nd).reduce(
+                (p, c, i, a) => {
+                  if (!p[c]) {
+                    p[c] = {
+                      "dpath": `${a.slice(0, i + 1).join(".")}`,
+                      "path": `${p["path"]}.${Object.keys(p).length - 1}`,
+                    };
+                  }
+                  return p[c];
+                },
+                num_ids,
+              );
+              const subclass_of = sub_obj
+                ? det_sub(l_nd, level, levels, sub_obj)
+                : levels[level.join(".")].aspects?.[ws(line)]?.subclass_of ||
+                  "";
+              const narr =
+                levels[level.join(".")].aspects?.[ws(line)]?.narrative || "";
+              const note = levels[level.join(".")].aspects?.[ws(line)]?.note ||
+                "";
+              const sub_href = subclass_of != ""
+                ? `href="#${subclass_of}"`
+                : "";
+              const sub_cl = subclass_of != "" ? "has_subclass " : "";
+              const zoom = levels?.[res.dpath] && zoom_links
+                ? "zoomable"
+                : "zoomnotable";
+              const note_attached = (narr == "" && note == "")
+                ? "notenotattached"
+                : "noteattached";
+              zoom == "zoomnotable"
+                ? levels[level.join(".")].dots.push(
+                  `"${line}" [id="${rn()}" xhref="${href}" tooltip="${narr}\n${note}"
+               color="#33bbee" ${sub_href} shape="rectangle" style="rounded" class="${sub_cl}${last_command} ${zoom} ${note_attached}" label="${res.path}\n${l_lbl}"]`,
+                )
+                : levels[level.join(".")].dots.push(
+                  `"${line}" [id="${rn()}" xhref="${href}" tooltip="${narr}\n${note}"
+               color="#33bbee" href="#${res.dpath}" shape="rectangle" style="rounded" class="${sub_cl}${last_command} ${zoom} ${note_attached}" label="${res.path}\n${l_lbl}"]`,
+                );
+            }
+            if ("agents" == last_command) {
+              levels[level.join(".")].dots.push(
+                `"${line}" [id="${rn()}" xhref="${href}" color="#009988" shape="rectangle" class="${last_command}" label="${l_lbl}" ]`,
+              );
+            }
+            last_subject = line;
+          } else {
+            if (["forward", "back", "both"].includes(last_command)) {
+              items = [];
+              last_object = line;
+              last_predicate = last_command;
+              levels[level.join(".")].dots.push(
+                `"${last_subject}" -> "${line}" [ dir="${last_predicate}"]`,
+              );
+            } else {
+              if (["items"].includes(last_command)) {
+                items.push(line);
+                levels[level.join(".")].dots.push(
+                  `"${last_subject}" -> "${last_object}" [tooltip="${
+                    items.join("\n")
+                  }" dir="${last_predicate}"]`,
+                );
+              }
+            }
+          }
+        } else {
+          level.push(l_nd);
+        }
       }
     }
   }
