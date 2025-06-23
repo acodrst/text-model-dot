@@ -49,13 +49,16 @@ function model_to_dots(model, zoom_links, sub_obj) {
           set_line(last_level, [], `:: ${last_command}`);
         }
         level = [];
-      } else {
+      } 
+      else {
         if (last_command == "level") {
           level.push(ws(line));
           // create key for level lines
           last_level_lines.push(line);
           last_level = level.join(".");
-        } else {
+        } 
+        else {
+          //we aren't a command, and aren't in level
           set_line(last_level, last_level_lines, line);
           last_level_lines = [];
         }
@@ -98,7 +101,8 @@ function model_to_dots(model, zoom_links, sub_obj) {
         if (
           ["processes", "datastores", "transforms", "agents", "locations"]
             .includes(last_command)
-        ) {
+        ) 
+        {
           const href = levels[level.join(".")].aspects?.[ws(line)]?.href || "";
           if (["datastores", "locations"].includes(last_command)) {
             data_id++;
